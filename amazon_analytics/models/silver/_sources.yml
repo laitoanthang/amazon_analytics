@@ -1,0 +1,69 @@
+version: 2
+sources:
+  - name: filecsv
+    database: AMAZON_BRONZELH
+    schema: CSV
+    tables:
+      - name: AMAZON_CUSTOMER_TRANSACTIONS
+        description: "Raw Amazon transactions from CSV"
+models:
+  - name: full_load_transactions
+    description: "Transactions deduplicated, with Vietnam timezone columns"
+    columns:
+      - name: transaction_id
+        description: "Unique transaction identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - not_null
+
+      - name: product
+        description: "Product name"
+        tests:
+          - not_null
+
+      - name: amount
+        description: "Transaction amount"
+        tests:
+          - not_null
+          
+      # - name: amount
+      #   description: "Transaction amount"
+      #   tests:
+      #     - not_null
+      #     - accepted_values:
+      #         values: ["> 0"]  # hoặc dùng expression test bên dưới
+
+      - name: order_timestamp
+        description: "Original order timestamp (UTC)"
+        tests:
+          - not_null
+
+      - name: recorded_at
+        description: "Original recorded timestamp (UTC)"
+        tests:
+          - not_null
+
+      - name: order_timestamp_vn
+        description: "Order timestamp converted to Vietnam time (UTC+7)"
+        tests:
+          - not_null
+
+      - name: recorded_at_vn
+        description: "Recorded timestamp converted to Vietnam time (UTC+7)"
+        tests:
+          - not_null
+
+      - name: "OrderDate"
+        description: "Order date as number YYYYMMDD"
+        tests:
+          - not_null
+
+      - name: "OrderTime"
+        description: "Order time as number HH24MISS"
+        tests:
+          - not_null

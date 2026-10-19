@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: "Product dimension"
+    columns:
+      - name: product_id
+        description: "Surrogate key for product"
+        tests:
+          - unique
+          - not_null
+
+      - name: product
+        description: "Product name"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_customer
+    description: "Customer dimension"
+    columns:
+      - name: customer_sk
+        description: "Surrogate key for customer"
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_transaction
+    columns:
+      - name: transaction_id
+        tests: [unique, not_null]
+      - name: customer_id
+        tests: [not_null]
+      - name: product
+        tests: [not_null]
+      - name: amount
+        tests: [not_null]
